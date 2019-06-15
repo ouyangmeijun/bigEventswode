@@ -150,7 +150,7 @@
                         } else {
                             //调用bs的js方法,弹出模态框
                             $('#myModal').modal({
-                                keyboard:true
+                                keyboard: true
                             })
                         }
                     }
@@ -167,15 +167,15 @@
                 如果成功就跳转到登录页login.html
             */
             $.ajax({
-                type:'get',
-                url:'http://localhost:8000/admin/getuser ',
-                success:function(backData){
+                type: 'get',
+                url: 'http://localhost:8000/admin/getuser ',
+                success: function (backData) {
                     //console.log(backData);
                     //渲染左边
                     $('.user_info>span>b').text(backData.data.nickname);
-                    $('.user_info>img').attr('src',backData.data.user_pic);
+                    $('.user_info>img').attr('src', backData.data.user_pic);
                     //渲染右边
-                    $('.user_center_link>img').attr('src',backData.data.user_pic)
+                    $('.user_center_link>img').attr('src', backData.data.user_pic)
 
                 }
             })
