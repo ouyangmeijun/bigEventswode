@@ -158,19 +158,27 @@
             $('#model_add').click(function () {
                 //判断这个按钮是不是保存按钮
                 if ($(this).hasClass('btn-success')) {
-                    var name = $('form[name="name"]').val();
-                    var slug = $('form[name="slug"]').val();
-                    var id = $('form[name="id"]').val();
+                    // var name = $('form[name="name"]').val();
+                    // var slug = $('form[name="slug"]').val();
+                    // var id = $('form[name="id"]').val();
+                    //这个方法是jQuery的方法,可以把form表单中的带有name属性的标签的值获取到.
+                    //获取到后组成一个字符串: name1=value1&name2=value2 这种格式字符串
+                    var data = $('form').serialize();
                     $.ajax({
                         type: 'post',
                         url: 'http://localhost:8000/admin/category_edit',
-                        data: {
-                            id: id,
-                            name: name,
-                            slug: slug
-                        },
+                        // data: {
+                        //     id: id,
+                        //     name: name,
+                        //     slug: slug
+                        // },
+                        data: data,
                         success: function (backData) {
                             num();
+                            //清空模态框中的文本
+                            $('form [name="name"]').val("");
+                            $('form [name="slug"]').val("");
+                            $('form [name="id"]').val("");
                         }
                     })
                 } else {
@@ -221,6 +229,7 @@
 
             //删除文章类别
             $('tbody').on('click', 'a.btn_delete', function () {
+                var that = $(this);
                 var id = $(this).attr('data-id');
                 $.ajax({
                     type: 'post',
@@ -230,7 +239,10 @@
                     },
                     success: function (backData) {
                         //console.log(backData);
-                        num();
+                        // num();
+                        if (backData.code == 200) {
+                            that.parent().parent().remove();
+                        }
                     }
                 })
             })
